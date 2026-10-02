@@ -1,0 +1,45 @@
+name: Publish Website Speed
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: 🚀 Deploy Website
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get Latest Code
+        uses: actions/checkout@v3
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: 🔧 Install Dependencies
+        run: npm install
+
+      - name: 🏗️ Build Project
+        run: npm run build
+
+      - name: 📂 Deploy Files
+        uses: SamKirkland/web-deploy@v1
+        with:
+          target-server: ${{ secrets.DEPLOY_HOST }}
+          remote-user: ${{ secrets.DEPLOY_USER }}
+          ssh-port: ${{ secrets.DEPLOY_PORT }}
+          private-ssh-key: ${{ secrets.SSH_KEY }}
+          destination-path: ${{ secrets.DEPLOY_PATH }}/wp-content/themes/redesign/
+          rsync-options: --archive --verbose --compress --delete-after --human-readable --exclude=.git* --exclude=.git/ --exclude=README.md --exclude=readme.md --exclude=.gitignore --exclude=node_modules --exclude=package*.json --exclude=vite*.config.js --exclude=tailwind*.config.js --exclude=docs/ --exclude=tests/ --exclude=playwright.config.js
+
+      - name: 🧹 Purge cache (staging)
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: /usr/local/bin/wp --path="${{ secrets.DEPLOY_PATH }}" litespeed-purge all

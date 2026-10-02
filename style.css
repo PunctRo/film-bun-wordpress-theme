@@ -1,0 +1,14 @@
+/*
+Theme Name: Film Bun Redesign
+Author: Bogdan Busuioc
+Author URI: https://devbybb.com
+Description: Custom theme for film-bun.ro, a Romanian movie recommendations site.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: my-wordpress-theme
+*/
+
+body {
+    font-family: Arial, sans-serif;
+}
