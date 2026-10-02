@@ -2,7 +2,7 @@
 
 A custom WordPress theme I built from scratch for [film-bun.ro](https://film-bun.ro), a Romanian movie recommendations site. No page builder and no parent theme: plain PHP templates, Tailwind CSS built with Vite, and small vanilla JS/jQuery modules.
 
-The public front end of film-bun.ro has since moved to Astro on Cloudflare, with WordPress kept as the CMS. This repository is a snapshot of the theme.
+film-bun.ro ran on this theme before the site was migrated to Astro on Cloudflare. This repository is a snapshot of the theme.
 
 ## What's in it
 
